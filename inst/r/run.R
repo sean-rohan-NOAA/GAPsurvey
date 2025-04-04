@@ -1,9 +1,56 @@
 
-# Connect to oracle ------------------------------------------------------------
 
-library(magrittr)
-library(readr)
-library(dplyr)
+
+PKG <- c(
+  
+  "devtools", 
+  "remotes",
+  
+  # other tidyverse
+  "plyr",
+  "dplyr",
+  "magrittr",
+  "tidyr",
+  "readxl", 
+  "viridis",
+  "readr",
+  "ggplot2", 
+  "tibble",
+  "janitor", 
+  "data.table", 
+  "here",
+  
+  # Survey data pull Specific packages
+  "akgfmaps", # devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = TRUE)
+  "coldpool", # devtools::install_github("afsc-gap-products/coldpool")
+  "gapctd", # install_github("afsc-gap-products/gapctd")
+  "gapindex", # devtools::install_github("afsc-gap-products/gapindex")
+  
+  "jsonlite", 
+  "httr", 
+  "sp", 
+  "RODBC", 
+  
+  "roxygen2", 
+  "usethis",
+  
+  "pkgdown", 
+  
+  # Spatial mapping
+  "sf",
+  "ggspatial", 
+  
+  "fontawesome",
+  
+  # API pulls
+  "jsonlite", 
+  "httr"
+)
+
+source("./R/pkg_install.R")
+lapply(unique(PKG), pkg_install)
+
+# Connect to oracle ------------------------------------------------------------
 
 if (file.exists("Z:/Projects/ConnectToOracle.R")) {
   source("Z:/Projects/ConnectToOracle.R")
@@ -126,27 +173,31 @@ write.table(str0,
 
 ## Station centroid data -------------------------------------------------------
 
-# devtools::install_github("afsc-gap-products/akgfmaps", build_vignettes = TRUE)
-library(akgfmaps)
-
 sel_region <- c("ai", "goa", "ebs", "nbs")
-stn_col <- c("ID", "ID", "STATIONID", "STATIONID")
 
-station_coords <- data.frame()
+station_coords <- c()
 
-for(ii in 1:length(sel_region)) {
+for (ii in 1:length(sel_region)) {
+  
   map_layers <- akgfmaps::get_base_layers(select.region = sel_region[ii], set.crs = "EPSG:3338")
-
+  
   station_center <- map_layers$survey.grid |>
     sf::st_make_valid() |>
     sf::st_centroid() |>
     sf::st_transform(crs = "WGS84")
-
-  station_center <- data.frame(station = station_center[[stn_col[ii]]]) |>
+  
+  names(station_center) <- tolower(names(station_center))
+  
+  if ("grid_id" %in% names(station_center) & sum(is.na(station_center$grid_id)) != nrow(station_center)) {
+    station_center$station <- paste0(station_center$grid_id, "-", station_center$station)
+  }
+  
+  station_center <- data.frame(station_center[, c("survey_definition_id", "design_year", "station")]) |>
     dplyr::bind_cols(sf::st_coordinates(station_center)) |>
     dplyr::rename(longitude_dd = X, latitude_dd = Y) |>
-    dplyr::mutate(srvy = toupper(sel_region[ii]))
-
+    dplyr::mutate(srvy = toupper(sel_region[ii]), 
+                  station = as.character(station))
+  
   station_coords <- station_coords |>
     dplyr::bind_rows(station_center)
 }
@@ -164,7 +215,7 @@ column <- metadata_colname %>%
   dplyr::mutate(metadata_colname = tolower(metadata_colname)) %>%
   dplyr::distinct()
 
-table <- "Station centroid coordinates for each station for all surveys, as defined by the {akgfmaps} package. "
+table <- "Station centroid coordinates for each station for all surveys, as defined by the akgfmaps package. "
 
 str0 <- paste0("#' @title Station centroid locations for each station from akgfmaps
 #' @description ",table,"
@@ -213,9 +264,9 @@ str0 <- paste0("#' @title Subsetted species data
                ncol(species_data)," variables.
 #' \\describe{
 ",
-paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ",
-              column$metadata_colname_desc,"}"), collapse = "\n"),
-"#' }
+               paste0(paste0("#'   \\item{\\code{",column$metadata_colname,"}}{", column$metadata_colname_long, ". ",
+                             column$metadata_colname_desc,"}"), collapse = "\n"),
+               "#' }
 #' @source https://github.com/afsc-gap-products/gap_products
 #' @keywords species code data
 #' @examples
@@ -230,19 +281,6 @@ write.table(str0,
 
 # README -----------------------------------------------------------------------
 
-library(here)
-library(devtools)
-library(usethis)
-library(roxygen2)
-library(RODBC)
-library(gapctd)
-library(akgfmaps)
-library(magrittr)
-library(readr)
-library(dplyr)
-library(pkgdown)
-library(gapindex)
-
 rmarkdown::render(here::here("inst", "r", "README.Rmd"),
                   output_dir = "./",
                   output_file = "README.md")
@@ -251,25 +289,34 @@ rmarkdown::render(here::here("inst", "r", "README.Rmd"),
 .rs.restartR()
 
 Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
-library(here)
-library(devtools)
-library(usethis)
-library(roxygen2)
-library(RODBC)
+
+PKG <- c("devtools", # # devtools::install_github("rstudio/fontawesome", force = T)
+         "here", 
+         "usethis", 
+         "roxygen2", 
+         "RODBC")
+source("./R/pkg_install.R")
+lapply(unique(PKG), pkg_install)
+
+source("./R/pkg_install.R")
+
 devtools::document()
 setwd("..")
 install("GAPsurvey")
 3
 setwd(here::here())
-# devtools::check()
+devtools::check()
 
 ## Create Documentation GitHub-Pages -------------------------------------------
 
 .rs.restartR()
-library(fontawesome) # # devtools::install_github("rstudio/fontawesome", force = T)
-library(here)
-library(usethis)
-library(pkgdown)
+
+PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
+         "here", 
+         "usethis", 
+         "pkgdown")
+source("./R/pkg_install.R")
+lapply(unique(PKG), pkg_install)
 
 # devtools::install_github("r-lib/pkgdown")
 # pkgdown::build_favicons()
@@ -281,7 +328,7 @@ pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-date0 <- "2024.10.02"
+date0 <- "2025.04.04"
 devtools::build(path = here::here(paste0("GAPsurvey_",date0,".tar.gz")))
 
 

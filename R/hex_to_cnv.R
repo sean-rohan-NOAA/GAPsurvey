@@ -74,7 +74,7 @@ if(is.null(dirpath_output)){
 }
 if(is.null(filepath_hex)){
   filepath_hex <-
-    choose.files(
+    utils::choose.files(
       default = "*.hex",
       caption = "Select .hex file",
       multi = FALSE,
@@ -84,7 +84,7 @@ if(is.null(filepath_hex)){
 }
 if(is.null(filepath_xmlcon)){
   filepath_xmlcon <-
-    choose.files(
+    utils::choose.files(
       default = "*.xmlcon",
       caption = "Select .xmlcon file",
       multi = FALSE,
@@ -146,7 +146,7 @@ if(is.null(filepath_xmlcon)){
                           grep(pattern = "temperature", x = tolower(data_channel_lines))
   )
 
-  scan_data <- read.table(file = filepath_cnv,
+  scan_data <- utils::read.table(file = filepath_cnv,
                           skip = grep(pattern = "*END*", x = data0))[, data_channel_index]
 
   names(scan_data) <- c("time_elapsed", "pressure", "temperature")
@@ -501,7 +501,7 @@ hex_to_cnv <- function(hex_path,
   )
 
   message("hex_to_cnv: Writing data to cnv.\n")
-  write_to_cnv(data_list = cnv_dat, output_path = output_path)
+  GAPsurvey::write_to_cnv(data_list = cnv_dat, output_path = output_path)
 
 }
 
@@ -796,7 +796,7 @@ integer_to_dissolved_oxygen <- function(do_integer,
   dVdt <- c(0, diff(do_voltage)/sample_interval)
 
   if(tau_correction) {
-    tau <- DO_tau_correction(temperature, pressure, tau20, d0, d1, d2)
+    tau <- GAPsurvey::DO_tau_correction(temperature, pressure, tau20, d0, d1, d2)
   }
 
   temperature_K <- temperature + 273.15
@@ -922,7 +922,7 @@ write_to_cnv <- function(data_list, output_path) {
                        " [Instrument's time stamp, header]"))
   out <- c(out, paste0("# bad_flag = -9.990e-29"))
   out <- c(out, paste0("# gapctd_date = ", format(Sys.time(), "%b %d %Y %T"),
-                       ", gapctd ", gsub(pattern = "'", replacement = "", x = packageVersion("gapctd"))))
+                       ", gapctd ", gsub(pattern = "'", replacement = "", x = utils::packageVersion("gapctd"))))
   out <- c(out, paste0("# gapctd_in = ", dl$hex_path))
   out <- c(out, paste0("# file_type = ascii"))
   out <- c(out, "*END*")

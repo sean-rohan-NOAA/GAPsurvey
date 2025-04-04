@@ -196,20 +196,6 @@ convert_ted_btd <- function(
 #'     filename_add = "newlog")
 #' readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
 #'   package = "GAPsurvey"))[1:5] # output file
-#'
-#' readLines(system.file("exdata/convert_log_gps/Haul0037",
-#'   package = "GAPsurvey"))[1:5] # input file
-#'  convert_log_gps(
-#'     VESSEL = 94,
-#'     CRUISE = 202101,
-#'     HAUL = 37,
-#'     DATE = "06/07/2021",
-#'     path_in = system.file("exdata/convert_log_gps/Haul0037.log",
-#'         package = "GAPsurvey"),
-#'     path_out = getwd(),
-#'     filename_add = "newlog")
-#' readLines(system.file("exdata/convert_log_gps/Haul0037_newlog.gps",
-#'   package = "GAPsurvey"))[1:5] # output file
 convert_log_gps <- function(
     VESSEL = NA,
     CRUISE = NA,
@@ -218,6 +204,7 @@ convert_log_gps <- function(
     path_in,
     path_out = "./",
     filename_add = "") {
+  
   if (is.na(VESSEL)) {
     VESSEL <- readline("Type vessel code:  ")
   }
@@ -250,7 +237,7 @@ convert_log_gps <- function(
   infoselect <- cbind(info, only.GPRMC)
   colnames(infoselect) <- c("VESSEL", "CRUISE", "HAUL", "DATE", "TIME", "LAT1", "LAT2", "LONG1", "LONG2")
   # head(infoselect)
-  hh2 <- sprintf("%06d",infoselect$TIME) # add leading zeroes
+  hh2 <- base::sprintf("%06d", as.numeric(infoselect$TIME)) # add leading zeroes
   hh = as.numeric(substr(hh2, start = 1, stop = 2))
 
 
@@ -405,12 +392,11 @@ convert_bvdr_marp <- function(path_bvdr,
 #' # Find times based on a survey (GOA) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = Sys.Date(),
 #'                    survey = "GOA",
-#'                    station = "323-176")
+#'                    station = "264-264-19-511")
 #' # Find times based on a survey (AI) station's recorded lat/lon for today's date
 #' get_sunrise_sunset(chosen_date = "2023-06-10",
 #'                     survey = "AI",
-#'                    station = "33-47")
-
+#'                    station = "10402-8-55")
 get_sunrise_sunset <- function(
     chosen_date,
     latitude = NULL,

@@ -57,9 +57,9 @@ get_sunrise_sunset(chosen_date = Sys.Date(),
 # Find times based on a survey (GOA) station's recorded lat/lon for today's date
 get_sunrise_sunset(chosen_date = Sys.Date(),
                    survey = "GOA",
-                   station = "323-176")
+                   station = "264-264-19-511")
 # Find times based on a survey (AI) station's recorded lat/lon for today's date
 get_sunrise_sunset(chosen_date = "2023-06-10",
                     survey = "AI",
-                   station = "33-47")
+                   station = "10402-8-55")
 }
