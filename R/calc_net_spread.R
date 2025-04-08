@@ -17,6 +17,7 @@
 #'
 #' @export
 #' @return a list of equations
+#' @keywords internal
 #'
 #' @examples
 #' # Here is an example using 202101 Alaska Night Data from race_data.hauls:

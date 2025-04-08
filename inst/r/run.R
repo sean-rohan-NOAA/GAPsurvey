@@ -47,7 +47,7 @@ PKG <- c(
   "httr"
 )
 
-source("./R/pkg_install.R")
+source("./inst/r/pkg_install.R")
 lapply(unique(PKG), pkg_install)
 
 # Connect to oracle ------------------------------------------------------------
@@ -295,10 +295,8 @@ PKG <- c("devtools", # # devtools::install_github("rstudio/fontawesome", force =
          "usethis", 
          "roxygen2", 
          "RODBC")
-source("./R/pkg_install.R")
+source("./inst/r/pkg_install.R")
 lapply(unique(PKG), pkg_install)
-
-source("./R/pkg_install.R")
 
 devtools::document()
 setwd("..")
@@ -315,7 +313,7 @@ PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", forc
          "here", 
          "usethis", 
          "pkgdown")
-source("./R/pkg_install.R")
+source("./inst/r/pkg_install.R")
 lapply(unique(PKG), pkg_install)
 
 # devtools::install_github("r-lib/pkgdown")

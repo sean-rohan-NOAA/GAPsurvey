@@ -36,3 +36,4 @@ dat[dat$NET_SPREAD_METHOD != 7, "NET_SPREAD"] <- NA # a normal net width
 dat[dat$NET_HEIGHT_METHOD != 6, "NET_HEIGHT"] <- NA # a normal net height
 calc_net_spread(dat)
 }
+\keyword{internal}

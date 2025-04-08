@@ -6,7 +6,7 @@
 #' You can use the library install bash script. 
 #' @keywords internal
 #' @example 
-#' lapply(PKG = c("dplyr, "nwfscSurvey", "sdmTMB), pkg_install)
+#' # lapply(PKG = c("dplyr", "ggplot2"), pkg_install)
 pkg_install <- function(PKG){
   
   if(base::grepl("/home/user/", base::getwd())){
@@ -26,7 +26,7 @@ pkg_install <- function(PKG){
     } else if (PKG == 'gapindex') {
       remotes::install_github("afsc-gap-products/gapindex")
     } else {
-      utlis::install.packages(PKG)
+      utils::install.packages(PKG)
     }
     require(PKG, character.only = TRUE)}
 }
