@@ -79,6 +79,14 @@ remotes::install_github("afsc-gap-products/GAPsurvey@main")
 library(GAPsurvey)
 ```
 
+or install from local file `.tar.gz`:
+
+```{r install-local, eval = FALSE}
+# example, the user may have a different path
+install.packages('C:/Users/User/Downloads/GAPsurvey_2025.04.09.tar.gz',
+                 repos=NULL, type='source')
+library(GAPsurvey)
+```
 
 ## User Resources
 

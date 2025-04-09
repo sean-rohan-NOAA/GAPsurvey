@@ -5,7 +5,7 @@
 \alias{station_coords}
 \title{Station centroid locations for each station from akgfmaps}
 \format{
-A data frame with 32942 observations on the following 7 variables.
+A data frame with 32942 observations on the following 8 variables.
 \describe{
   \item{\code{design_year}}{Design year. Year ID associated with a given value AREA_ID. This field describes the changes in the survey design over time.}
   \item{\code{latitude_dd}}{Latitude (decimal degrees). Latitude (one hundred thousandth of a decimal degree).}

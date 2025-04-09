@@ -188,11 +188,11 @@ for (ii in 1:length(sel_region)) {
   
   names(station_center) <- tolower(names(station_center))
   
-  if ("grid_id" %in% names(station_center) & sum(is.na(station_center$grid_id)) != nrow(station_center)) {
-    station_center$station <- paste0(station_center$grid_id, "-", station_center$station)
-  }
+  # if ("grid_id" %in% names(station_center) & sum(is.na(station_center$grid_id)) != nrow(station_center)) {
+  #   station_center$station <- paste0(station_center$grid_id, "-", station_center$station)
+  # }
   
-  station_center <- data.frame(station_center[, c("survey_definition_id", "design_year", "station")]) |>
+  station_center <- data.frame(station_center[, c("survey_definition_id", "design_year", "station", "grid_id")]) |>
     dplyr::bind_cols(sf::st_coordinates(station_center)) |>
     dplyr::rename(longitude_dd = X, latitude_dd = Y) |>
     dplyr::mutate(srvy = toupper(sel_region[ii]), 
@@ -279,14 +279,31 @@ write.table(str0,
             file = here::here("R","species_data.R"),
             sep = "\t", row.names = FALSE, col.names = FALSE, quote = FALSE)
 
+# make GAPsurvey_script.Rmd into .R script -------------------------------------
+
+# Update GAPsurvey-script.Rmd file with new date version number!!!
+knitr::purl(
+  input = here::here("vignettes", "GAPsurvey-script.Rmd"), 
+  output = here::here("inst", "r", "GAPsurvey-script.R"), documentation = 2)
+
+aa <- readLines(con = here::here("inst", "r", "GAPsurvey-script.R")) 
+aa <- aa[c(2,20:length(aa))]
+aa <- aa[!grepl(pattern = "## ----", x = aa)]
+aa <- gsub(pattern = "#' ", replacement = "# ", x = aa)
+aa <- gsub(pattern = "# > ", replacement = "# ", x = aa)
+aa <- aa[aa != "# "]
+writeLines(text = aa, con = here::here("inst", "r", "GAPsurvey-script.R"))
+
 # README -----------------------------------------------------------------------
 
+# Update README.Rmd file with new date version number!!!
 rmarkdown::render(here::here("inst", "r", "README.Rmd"),
                   output_dir = "./",
                   output_file = "README.md")
 
 # Document and create Package --------------------------------------------------
 .rs.restartR()
+# Update DESCRIPTION file with new date version number!!!
 
 Sys.setenv('PATH' = paste0('C:/Program Files/qpdf-10.3.1/bin;', Sys.getenv('PATH')))
 
@@ -308,6 +325,7 @@ devtools::check()
 ## Create Documentation GitHub-Pages -------------------------------------------
 
 .rs.restartR()
+date0 <- "2025.04.09"
 
 PKG <- c("fontawesome", # # devtools::install_github("rstudio/fontawesome", force = T)
          "here", 
@@ -326,7 +344,6 @@ pkgdown::build_site(pkg = here::here())
 # usethis::use_github_action("pkgdown")
 
 # Save Package tar.gz
-date0 <- "2025.04.04"
 devtools::build(path = here::here(paste0("GAPsurvey_",date0,".tar.gz")))
 
 
