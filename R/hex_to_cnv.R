@@ -18,6 +18,10 @@
 #' \dontrun{
 #' # CTD without auxiliary sensors
 #'
+#' # Run without passing arguments as code
+#' 
+#' convert_ctd_btd()
+#'
 #'convert_ctd_btd(
 #'  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
 #'    "2021_06_13_0003.hex"), package = "GAPsurvey"),
@@ -29,24 +33,9 @@
 #'  HAUL = 107,
 #'  SERIAL_NUMBER = 8105)
 #'
-#' # CTD with DO and pH sensors
-#'
-#' convert_ctd_btd(
-#'   filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
-#'     "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
-#'   filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-#'     "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
-#'   VESSEL = 162,
-#'   CRUISE = 202301,
-#'   HAUL = 97,
-#'   latitude = 59.01693,
-#'   MODEL_NUMBER = "",
-#'   VERSION_NUMBER = "",
-#'   SERIAL_NUMBER = 8106)
 #' }
 #' @return .BTH and .BTD files to the dirpath_output directory.
 #' @export
-#' @references https://github.com/afsc-gap-products/gapctd
 
 convert_ctd_btd <- function(filepath_hex = NULL,
                             dirpath_output = NULL,
@@ -256,12 +245,6 @@ calc_depth_from_pressure <- function(latitude, pressure) {
 #' @author Sean Rohan
 #' @examples
 #' # Convert SBE19plus CTD .hex file to .cnv
-#'
-#' library(gapctd)
-#'
-#' hex_to_cnv(hex_path = system.file("./extdata/example/SBE19plus_01908106_2023_06_19_0001.hex", package = "gapctd"),
-#'            xmlcon_path = system.file("./extdata/example/SBE19plusV2_8106_ph_DO_leg2.xmlcon", package = "gapctd"),
-#'            output_path = "SBE19plus_01908106_2023_06_19_0001_raw.cnv")
 
 hex_to_cnv <- function(hex_path,
                        output_path,
@@ -922,7 +905,7 @@ write_to_cnv <- function(data_list, output_path) {
                        " [Instrument's time stamp, header]"))
   out <- c(out, paste0("# bad_flag = -9.990e-29"))
   out <- c(out, paste0("# gapctd_date = ", format(Sys.time(), "%b %d %Y %T"),
-                       ", gapctd ", gsub(pattern = "'", replacement = "", x = utils::packageVersion("gapctd"))))
+                       ", GAPsurvey ", gsub(pattern = "'", replacement = "", x = utils::packageVersion("GAPsurvey"))))
   out <- c(out, paste0("# gapctd_in = ", dl$hex_path))
   out <- c(out, paste0("# file_type = ascii"))
   out <- c(out, "*END*")
