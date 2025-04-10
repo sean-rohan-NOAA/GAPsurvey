@@ -1,4 +1,4 @@
-# title: "Example GAPsurvey got-to script"
+# title: "Example GAPsurvey Go-to script"
 # Last updated April 2025
 # # ------------------------------------------------------------------------------
 # ## Install R package
@@ -39,21 +39,21 @@ get_catch_haul_history(
 
 # # All catch data
 # You can also look through all catch data from the survey
-?GAPsurvey::public_data
+# ?GAPsurvey::public_data
 
 # GAPsurvey::public_data
 head(GAPsurvey::public_data) # using `head()` function to see first few (6) rows of dataset 
 
 # # Species Data
 # You can also use this to find all species and species codes for quick searching
-?GAPsurvey::species_data
+# ?GAPsurvey::species_data
 
 # GAPsurvey::species_data
 head(GAPsurvey::species_data) # using `head()` function to see first few (6) rows of dataset 
 
 # # Species Polycorder reference
 # You can also use this to find all species and species codes for quick searching
-?GAPsurvey::PolySpecies
+# ?GAPsurvey::PolySpecies
 
 # GAPsurvey::PolySpecies
 head(GAPsurvey::PolySpecies) # using `head()` function to see first few (6) rows of dataset 
@@ -99,47 +99,18 @@ get_sunrise_sunset(chosen_date = "2025-06-04",
 # ?convert_ctd_btd
 
 # Examples: 
-convert_ctd_btd(
-  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
-                                    "SBE19plus_01908106_2023_06_18_0001.hex"),
-                             package = "GAPsurvey"),
-  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-                                       "SBE19plusV2_8106_ph_DO_leg2.xmlcon"),
-                                package = "GAPsurvey"),
-  VESSEL = 162,
-  CRUISE = 202301,
-  HAUL = 97,
-  latitude = 59.01693, # Approximate - for depth estimation
-  MODEL_NUMBER = "",
-  VERSION_NUMBER = "",
-  SERIAL_NUMBER = 8106)
-
-convert_ctd_btd(
-  filepath_hex = 
-    system.file(paste0("exdata/convert_ctd_btd/",
-    "2021_06_13_0003.hex"), package = "GAPsurvey"),
-  filepath_xmlcon = 
-    system.file(paste0("exdata/convert_ctd_btd/",
-    "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
-  latitude = 55,
-  VESSEL = 94,
-  CRUISE = 202101,
-  HAUL = 107,
-  SERIAL_NUMBER = 8105)
-
-# CTD with DO and pH sensors
- convert_ctd_btd(
-   filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
-     "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
-   filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-     "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
-   VESSEL = 162,
-   CRUISE = 202301,
-   HAUL = 97,
-   latitude = 59.01693,
-   MODEL_NUMBER = "",
-   VERSION_NUMBER = "",
-   SERIAL_NUMBER = 8106)
+# convert_ctd_btd(
+#  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+#    "2021_06_13_0003.hex"), package = "GAPsurvey"),
+#  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+#    "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
+#  latitude = 55,
+#  VESSEL = 94,
+#  CRUISE = 202101,
+#  HAUL = 107,
+#  MODEL_NUMBER = 1,
+#  VERSION_NUMBER = 1,
+#  SERIAL_NUMBER = 8105)
 
 # # BVDR Conversion to Create BTD data
 # Converts Marport BVDR data (.ted and .tet files from Marport headrope sensor) to .BTD format.  You must first run the BVDR converter program (convert_bvdr.exe) to convert the Marport .bvdr files into .ted and .tet files that can be pulled into R. The BVDR program and instructions can be found in the RACE Survey App.  You will have to create your own .SGT file using the example in the BVDR instruction file with start and end time (be sure to include a carriage return after your (second and) final row of data!), because this is not a file that our current systems creates.  Once you have used the BVDR converter to output the .ted and .tet files you are ready to use the convert_ted_btd() function here!
@@ -148,31 +119,29 @@ convert_ctd_btd(
 # ?convert_ted_btd
 
 # Example: 
- # example input files
- readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.ted",
-   package = "GAPsurvey"))[1:5]
- readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.tet",
-   package = "GAPsurvey"))[1:5]
- readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.teh",
-   package = "GAPsurvey"))[1:5]
- 
-  # run function
- convert_ted_btd(
-    VESSEL = 94,
-    CRUISE = 201901,
-    HAUL = 3,
-    MODEL_NUMBER = 123,
-    VERSION_NUMBER = 456,
-    SERIAL_NUMBER = 789,
-    path_in = system.file("exdata/convert_bvdr_btd/", package = "GAPsurvey"),
-    path_out = getwd(),
-    filename_add = "newted")
-  
- # example output files
- readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTD",
-   package = "GAPsurvey"))[1:5]
- readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTH",
-   package = "GAPsurvey"))[1:5]
+#  # example input files
+#  readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.ted",
+#    package = "GAPsurvey"))[1:5]
+#  readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.tet",
+#    package = "GAPsurvey"))[1:5]
+#  readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.teh",
+#    package = "GAPsurvey"))[1:5]
+#   # run function
+#  convert_ted_btd(
+#     VESSEL = 94,
+#     CRUISE = 201901,
+#     HAUL = 3,
+#     MODEL_NUMBER = 123,
+#     VERSION_NUMBER = 456,
+#     SERIAL_NUMBER = 789,
+#     path_in = system.file("exdata/convert_bvdr_btd/", package = "GAPsurvey"),
+#     path_out = getwd(),
+#     filename_add = "newted")
+#  # example output files
+#  readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTD",
+#    package = "GAPsurvey"))[1:5]
+#  readLines(system.file("exdata/convert_bvdr_btd/HAUL0003_newted.BTH",
+#    package = "GAPsurvey"))[1:5]
 
 # # Recover position data from Globe .log file
 # In the event that the MARPORT server GPS fails or is incomplete, "convert_log_gps()" converts GLOBE LOG files into a format that can be uploaded into WHEELHOUSE.
@@ -192,24 +161,22 @@ convert_ctd_btd(
 # ?convert_log_gps
 
 # # Example: 
-# example input file
-readLines(system.file("exdata/convert_log_gps/06062017.log",
-   package = "GAPsurvey"))[1:5] # input file
-
-# use function
-convert_log_gps(
-     VESSEL = 94,
-     CRUISE = 201901,
-     HAUL = 3,
-     DATE = "06/06/2017",
-     path_in = system.file("exdata/convert_log_gps/06062017.log",
-         package = "GAPsurvey"),
-     path_out = getwd(),
-     filename_add = "newlog")
-
-# example output file
-readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
-   package = "GAPsurvey"))[1:5] # output file
+# # example input file
+# readLines(system.file("exdata/convert_log_gps/06062017.log",
+#    package = "GAPsurvey"))[1:5] # input file
+# # use function
+# convert_log_gps(
+#      VESSEL = 94,
+#      CRUISE = 201901,
+#      HAUL = 3,
+#      DATE = "06/06/2017",
+#      path_in = system.file("exdata/convert_log_gps/06062017.log",
+#          package = "GAPsurvey"),
+#      path_out = getwd(),
+#      filename_add = "newlog")
+# # example output file
+# readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
+#    package = "GAPsurvey"))[1:5] # output file
 
 # # Convert .bvdr files to .marp files
 # If you mistakenly delete the marport data for a haul, you can retrieve that data through this converter.
@@ -218,22 +185,23 @@ readLines(system.file("exdata/convert_log_gps/HAUL0003_newlog.gps",
 # 2. Find the uninterpretable character symbol. Often, depending on the editor, this will look like a box or the highlighted letters "SUB". Find and delete (via replace) these characters for the whole document. An error will appear and only part of the file will be read (stopping at the line before where this unsupported symbol is) if you do not edit the data ahead of time.
 # 3. Save the .bvdr file with these changes and use the link to that file below for path_bvdr
 # For an example of what a proper .marp file looks like, refer to system.file("exdata/convert_bvdr_marp/HAUL0001.marp", package = "GAPsurvey")
-# example input file
-readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
-  package = "GAPsurvey"))[1:5] # input file
+# Learn more:
+# ?convert_log_gps
 
-# see what example input file looks like
-head(convert_bvdr_marp(
-  path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
-                                  package = "GAPsurvey"),
-          verbose = TRUE), 20)
-
-# use function
-convert_bvdr_marp(
-  path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
-                                  package = "GAPsurvey"))
-
-# example output file
-readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.marp",
-  package = "GAPsurvey")) # output file
+# # Example: 
+# # example input file
+# readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
+#   package = "GAPsurvey"))[1:5] # input file
+# # see what example input file looks like
+# head(convert_bvdr_marp(
+#   path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
+#                                   package = "GAPsurvey"),
+#           verbose = TRUE), 20)
+# # use function
+# convert_bvdr_marp(
+#   path_bvdr = system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
+#                                   package = "GAPsurvey"))
+# # example output file
+# readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.marp",
+#   package = "GAPsurvey")) # output file
 

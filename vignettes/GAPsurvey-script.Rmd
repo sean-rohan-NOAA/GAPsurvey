@@ -1,5 +1,5 @@
 ---
-title: "Example GAPsurvey got-to script"
+title: "Example GAPsurvey Go-to script"
 description: ""
 date: "`r format(Sys.Date(), format='%B %d %Y') `"
 output: rmarkdown::html_vignette
@@ -83,7 +83,7 @@ get_catch_haul_history(
 
 You can also look through all catch data from the survey
 
-```{r public_data-learn, echo = FALSE}
+```{r public_data-learn, eval = FALSE}
 ?GAPsurvey::public_data
 ```
 
@@ -96,7 +96,7 @@ head(GAPsurvey::public_data) # using `head()` function to see first few (6) rows
 
 You can also use this to find all species and species codes for quick searching
 
-```{r species_data-learn, echo = FALSE}
+```{r species_data-learn, eval = FALSE}
 ?GAPsurvey::species_data
 ```
 
@@ -109,7 +109,7 @@ head(GAPsurvey::species_data) # using `head()` function to see first few (6) row
 
 You can also use this to find all species and species codes for quick searching
 
-```{r PolySpecies-learn, echo = FALSE}
+```{r PolySpecies-learn, eval = FALSE}
 ?GAPsurvey::PolySpecies
 ```
 
@@ -171,54 +171,19 @@ This function converts a CTD  hexadecimal (.hex) file to bathythermic data (.btd
 
 Examples: 
 
-```{r convert_ctd_btd1, eval = FALSE}
+```{r convert_ctd_btd, eval = FALSE}
 convert_ctd_btd(
-  filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
-                                    "SBE19plus_01908106_2023_06_18_0001.hex"),
-                             package = "GAPsurvey"),
-  filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-                                       "SBE19plusV2_8106_ph_DO_leg2.xmlcon"),
-                                package = "GAPsurvey"),
-  VESSEL = 162,
-  CRUISE = 202301,
-  HAUL = 97,
-  latitude = 59.01693, # Approximate - for depth estimation
-  MODEL_NUMBER = "",
-  VERSION_NUMBER = "",
-  SERIAL_NUMBER = 8106)
-```
-
-
-```{r convert_ctd_btd2, eval = FALSE}
-convert_ctd_btd(
-  filepath_hex = 
-    system.file(paste0("exdata/convert_ctd_btd/",
-    "2021_06_13_0003.hex"), package = "GAPsurvey"),
-  filepath_xmlcon = 
-    system.file(paste0("exdata/convert_ctd_btd/",
-    "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
-  latitude = 55,
-  VESSEL = 94,
-  CRUISE = 202101,
-  HAUL = 107,
-  SERIAL_NUMBER = 8105)
-```
-
-CTD with DO and pH sensors
-
-```{r convert_ctd_btd-do-ph, eval = FALSE}
- convert_ctd_btd(
-   filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
-     "SBE19plus_01908106_2023_06_18_0001.hex"), package = "GAPsurvey"),
-   filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
-     "SBE19plusV2_8106_ph_DO_leg2.xmlcon"), package = "GAPsurvey"),
-   VESSEL = 162,
-   CRUISE = 202301,
-   HAUL = 97,
-   latitude = 59.01693,
-   MODEL_NUMBER = "",
-   VERSION_NUMBER = "",
-   SERIAL_NUMBER = 8106)
+ filepath_hex = system.file(paste0("exdata/convert_ctd_btd/",
+   "2021_06_13_0003.hex"), package = "GAPsurvey"),
+ filepath_xmlcon = system.file(paste0("exdata/convert_ctd_btd/",
+   "19-8102_Deploy2021.xmlcon"), package = "GAPsurvey"),
+ latitude = 55,
+ VESSEL = 94,
+ CRUISE = 202101,
+ HAUL = 107, 
+ MODEL_NUMBER = 1, 
+ VERSION_NUMBER = 1, 
+ SERIAL_NUMBER = 8105)
 ```
 
 # BVDR Conversion to Create BTD data
@@ -235,7 +200,7 @@ Learn more:
 
 Example: 
 
-```{r convert_ted_btd}
+```{r convert_ted_btd, eval = FALSE}
  # example input files
  readLines(system.file("exdata/convert_bvdr_btd/201901_94_0003.ted",
    package = "GAPsurvey"))[1:5]
@@ -289,7 +254,7 @@ Learn more:
 
 # Example: 
 
-```{r convert_log_gps}
+```{r convert_log_gps, eval = FALSE}
 # example input file
 readLines(system.file("exdata/convert_log_gps/06062017.log",
    package = "GAPsurvey"))[1:5] # input file
@@ -320,7 +285,15 @@ Before using this script,
 3. Save the .bvdr file with these changes and use the link to that file below for path_bvdr
 For an example of what a proper .marp file looks like, refer to system.file("exdata/convert_bvdr_marp/HAUL0001.marp", package = "GAPsurvey")
 
-```{r convert_bvdr_marp}
+Learn more:
+
+```{r convert_bvdr_marp-learn, eval =  FALSE}
+?convert_log_gps
+```
+
+# Example: 
+
+```{r convert_bvdr_marp, eval = FALSE}
 # example input file
 readLines(system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr",
   package = "GAPsurvey"))[1:5] # input file

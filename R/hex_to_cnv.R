@@ -864,11 +864,9 @@ get_calibration_parameter <- function(header, cal_par, start_block = NULL, end_b
 #'
 #' @param data_list List of data and metadata to write to the cnv file
 #' @param output_path Output path for the cnv file
-#' @noRd
 #' @author Sean Rohan
-
 write_to_cnv <- function(data_list, output_path) {
-
+# #' @noRd
   dl <- data_list
 
   dl$data <- dl$data[names(dl$output_channels)]

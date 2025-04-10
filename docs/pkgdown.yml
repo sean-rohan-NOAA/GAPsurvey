@@ -1,9 +1,9 @@
-pandoc: '3.2'
+pandoc: 2.19.2
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  example-script: example-script.html
-last_built: 2025-04-08T17:23Z
+  GAPsurvey-script: GAPsurvey-script.html
+last_built: 2025-04-10T00:17Z
 urls:
   reference: https://afsc-gap-products.github.io/GAPsurvey/reference
   article: https://afsc-gap-products.github.io/GAPsurvey/articles
