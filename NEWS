@@ -1,3 +1,17 @@
+GAPsurvey 2026.05.13 (May 13, 2026)
+----------------------------------------------------------------
+
+NEW FUNCTIONALITY
+
+- Added file navigation to convert_tzdb_gps()
+- Removed the following deprecated Wheelhouse/Calypso and Globe
+  functions from NAMESPACE (still accessible as @noRd):
+  - convert_ted_btd()
+  - convert_log_gps()
+  - convert_bvdr_marp()
+  - convert_nmea_btd()
+
+
 GAPsurvey 2026.04.08 (April 8, 2026)
 ----------------------------------------------------------------
 

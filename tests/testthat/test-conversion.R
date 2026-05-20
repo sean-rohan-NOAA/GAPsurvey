@@ -37,7 +37,7 @@ testthat::test_that(
     syspath_bvdr <- system.file("exdata/convert_bvdr_marp/20220811-00Za.bvdr", package = "GAPsurvey");
     fpath_bvdr <- paste0(getwd(), "/", basename(syspath_bvdr));
     file.copy(syspath_bvdr, fpath_bvdr);
-    convert_bvdr_marp(path_bvdr = fpath_bvdr, make_btd_bth = FALSE);
+    GAPsurvey:::convert_bvdr_marp(path_bvdr = fpath_bvdr, make_btd_bth = FALSE);
     # Check files exist
     fpath_marp <- paste0(getwd(), "/20220811-00Za.marp");
     testthat::expect_true(file.exists(fpath_marp));
@@ -73,7 +73,7 @@ testthat::test_that(
 testthat::test_that(
   "Test convert_ted_btd()",
   {
-    convert_ted_btd(
+    GAPsurvey:::convert_ted_btd(
       VESSEL = 94,
       CRUISE = 201901,
       HAUL = 3,
