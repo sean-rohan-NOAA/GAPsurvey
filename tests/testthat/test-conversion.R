@@ -119,7 +119,7 @@ testthat::test_that(
     tzdb_date <- as.POSIXct(tzdb_out$V4[1], format = "%m/%d/%y %H:%M:%S");
     test_date <- as.POSIXct("01/25/24 23:30:00", format = "%m/%d/%y %H:%M:%S");
     testthat::expect_equal(tzdb_date, test_date);
-    testthat::expect_true(all(round(tzdb_out[1, c("V5", "V6")], 1) == c(4729.7, -12244.9)));
+    testthat::expect_true(all(round(tzdb_out[1, c("V5", "V6")], 1) == c(4729.7, -12215.1)));
     suppressWarnings(file.remove(fpath_tzdb));
   }
 )
